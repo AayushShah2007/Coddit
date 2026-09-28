@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Coddit — A Reddit-inspired platform for coders to share, discuss, and showcase code. Coming soon." />
+  <meta name="theme-color" content="#0a0e1a" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Coddit — Coming Soon" />
+  <meta property="og:description" content="Where coders share, discuss, and showcase code. Launching soon." />
+  <meta property="og:type" content="website" />
+
+  <title>Coddit — Coming Soon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>"
+  />
+
+  <style>
+    /* ---------- Reset & Base ---------- */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0e1a;
+      --bg-2: #0f1424;
+      --card: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e6edf3;
+      --muted: #8b95a7;
+      --accent: #4ff8d2;
+      --accent-2: #7c5cff;
+      --accent-3: #ff5c8a;
+      --gradient: linear-gradient(135deg, #4ff8d2 0%, #7c5cff 50%, #ff5c8a 100%);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    /* ---------- Animated Background ---------- */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124, 92, 255, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(79, 248, 210, 0.14), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(255, 92, 138, 0.12), transparent 50%);
+      z-index: -2;
+      animation: bgShift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0%   { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.15) translate(-2%, 2%); }
+    }
+
+    /* Grid overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: -1;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      pointer-events: none;
+    }
+
+    /* ---------- Layout ---------- */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Logo ---------- */
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      animation: fadeUp 1s ease 0.1s both;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.55; transform: scale(0.85); }
+    }
+
+    /* ---------- Badge ---------- */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      animation: fadeUp 1s ease 0.2s both;
+    }
+
+    .badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-3);
+      box-shadow: 0 0 10px var(--accent-3);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    /* ---------- Headline ---------- */
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+
+    h1 .gradient {
+      background: var(--gradient);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 6s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    /* ---------- Subtitle ---------- */
+    .subtitle {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--muted);
+      max-width: 620px;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+
+    .subtitle strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---------- Countdown ---------- */
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 520px;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0.5rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .time-box:hover {
+      transform: translateY(-3px);
+      border-color: rgba(79, 248, 210, 0.35);
+    }
+
+    .time-box .num {
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .time-box .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ---------- Notify Form ---------- */
+    .notify-form {
+      display: flex;
+      width: 100%;
+      max-width: 520px;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      animation: fadeUp 1s ease 0.6s both;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .notify-form:focus-within {
+      border-color: rgba(124, 92, 255, 0.6);
+      box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+    }
+
+    .notify-form input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    .notify-form input::placeholder {
+      color: var(--muted);
+    }
+
+    .notify-form button {
+      border: none;
+      cursor: pointer;
+      padding: 0.85rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0a0e1a;
+      background: var(--gradient);
+      background-size: 200% 200%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+      white-space: nowrap;
+    }
+
+    .notify-form button:hover {
+      transform: translateY(-1px);
+      background-position: 100% 50%;
+      box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+    }
+
+    .notify-form button:active {
+      transform: translateY(0);
+    }
+
+    .form-message {
+      font-size: 0.85rem;
+      min-height: 1.2rem;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .form-message.show {
+      opacity: 1;
+    }
+
+    .form-message.error {
+      color: var(--accent-3);
+    }
+
+    /* ---------- Feature Chips ---------- */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      max-width: 620px;
+      animation: fadeUp 1s ease 0.7s both;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .chip:hover {
+      color: var(--text);
+      border-color: rgba(79, 248, 210, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .chip svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--accent);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      animation: fadeUp 1s ease 0.8s both;
+    }
+
+    .socials {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .socials a:hover {
+      color: var(--accent);
+      border-color: rgba(79, 248, 210, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .socials svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 520px) {
+      .countdown {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+
+      .time-box {
+        padding: 0.75rem 0.25rem;
+      }
+
+      .time-box .num {
+        font-size: 1.2rem;
+      }
+
+      .notify-form {
+        flex-direction: column;
+      }
+
+      .notify-form button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <!-- Logo -->
+    <div class="logo">
+      <span class="logo-dot"></span>
+      coddit.dev
+    </div>
+
+    <!-- Badge -->
+    <span class="badge">
+      <span class="dot"></span>
+      Launching Soon
+    </span>
+
+    <!-- Headline -->
+    <h1>
+      Where coders <br />
+      <span class="gradient">share, discuss &amp; ship.</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="subtitle">
+      <strong>Coddit</strong> is a Reddit-inspired platform built for developers —
+      post code, drop comments, react, and grow with the community. Sign in with email,
+      Google, Apple, or Facebook and start shipping together.
+    </p>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown" aria-label="Countdown to launch">
+      <div class="time-box">
+        <span class="num" id="days">00</span>
+        <span class="label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="num" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="num" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="time-box">
+        <span class="num" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+
+    <!-- Notify Form -->
+    <form class="notify-form" id="notifyForm" novalidate>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="you@developer.com"
+        autocomplete="email"
+        aria-label="Email address"
+        required
+      />
+      <button type="submit">Notify Me</button>
+    </form>
+    <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+
+    <!-- Feature Chips -->
+    <div class="features">
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        Rich Code Posts
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        Likes &amp; Comments
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        Uploads Manager
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        OAuth Ready
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        Turso-Powered
+      </span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="socials">
+        <a href="https://github.com/your-username/coddit" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.6 4.6 18.6 5 18.6 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com/your-username" aria-label="Twitter / X" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com/in/your-username" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.44-2.13 2.93v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </a>
+      </div>
+      <p>© <span id="year"></span> Coddit · Built with ❤️ for coders, by coders.</p>
+    </footer>
+  </main>
+
+  <script>
+    /* ---------- Year ---------- */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- Countdown ---------- */
+    // 👉 Set your launch date here
+    const LAUNCH_DATE = new Date("2026-01-01T00:00:00Z").getTime();
+
+    const els = {
+      days: document.getElementById("days"),
+      hours: document.getElementById("hours"),
+      minutes: document.getElementById("minutes"),
+      seconds: document.getElementById("seconds"),
+    };
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = LAUNCH_DATE - now;
+
+      if (diff <= 0) {
+        els.days.textContent = "00";
+        els.hours.textContent = "00";
+        els.minutes.textContent = "00";
+        els.seconds.textContent = "00";
+        clearInterval(timer);
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      els.days.textContent = pad(d);
+      els.hours.textContent = pad(h);
+      els.minutes.textContent = pad(m);
+      els.seconds.textContent = pad(s);
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+
+    /* ---------- Notify Form ---------- */
+    const form = document.getElementById("notifyForm");
+    const emailInput = document.getElementById("email");
+    const message = document.getElementById("formMessage");
+
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+
+      if (!EMAIL_RE.test(email)) {
+        message.textContent = "Please enter a valid email address.";
+        message.classList.add("show", "error");
+        return;
+      }
+
+      // 👉 Replace with your real backend endpoint (e.g. Resend / Mailchimp / Turso)
+      try {
+        // await fetch("/api/waitlist", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({ email }),
+        // });
+
+        message.textContent = "🎉 You're on the list! We'll notify you at launch.";
+        message.classList.remove("error");
+        message.classList.add("show");
+        form.reset();
+
+        setTimeout(() => message.classList.remove("show"), 5000);
+      } catch (err) {
+        message.textContent = "Something went wrong. Please try again.";
+        message.classList.add("show", "error");
+      }
+    });
+  </script>
+</body>
+</html>
